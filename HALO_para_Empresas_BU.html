@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HALO para Empresas — Idealização da Business Unit</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+:root{
+  --black:#000;
+  --white:#fff;
+  --blue:#0071E3;
+  --blue-dim:#005bb8;
+  --bg-dark:#000000;
+  --bg-light:#f5f5f7;
+  --text-on-dark:rgba(255,255,255,0.65);
+  --text-on-light:rgba(0,0,0,0.6);
+  --title-dark:#ffffff;
+  --title-light:#1d1d1f;
+  --border-dark:rgba(255,255,255,0.1);
+  --border-light:rgba(0,0,0,0.1);
+  --glass-dark:rgba(255,255,255,0.05);
+  --glass-light:rgba(255,255,255,0.9);
+  --radius:18px;
+  --radius-sm:12px;
+}
+body{
+  background:var(--bg-dark);
+  color:var(--white);
+  font-family:'Open Sans',sans-serif;
+  font-size:17px;font-weight:300;line-height:1.75;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+/* ─── EDIT BAR ─── */
+.editbar{
+  position:fixed;top:16px;right:16px;z-index:1000;
+  background:rgba(0,113,227,0.95);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-radius:24px;padding:10px 18px 10px 14px;
+  display:flex;align-items:center;gap:10px;
+  box-shadow:0 8px 32px rgba(0,113,227,.4);
+  font-family:'Open Sans',sans-serif;font-size:12px;font-weight:600;
+  color:#fff;letter-spacing:.04em;
+  cursor:pointer;user-select:none;
+  transition:transform .2s,background .2s;
+}
+.editbar:hover{transform:translateY(-1px);background:rgba(0,113,227,1);}
+.editbar.active{background:rgba(180,40,40,.95);}
+.editbar.active:hover{background:rgba(220,50,50,1);}
+.eb-dot{width:8px;height:8px;border-radius:50%;background:#fff;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+@media print{.editbar{display:none;}}
+
+/* ─── HERO / CAPA ─── */
+.hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:140px 64px 100px;
+  position:relative;overflow:hidden;
+  background:var(--bg-dark);
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 50% at 30% 50%,rgba(0,113,227,.08) 0%,transparent 60%);
+  pointer-events:none;
+}
+.hero-meta{
+  position:absolute;top:48px;left:64px;right:64px;
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(255,255,255,0.4);
+}
+.hero-monogram strong{color:#fff;}
+.hero-monogram span{color:var(--blue);}
+.hero-label{
+  font-size:11px;font-weight:600;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--blue);margin-bottom:36px;
+  display:inline-block;
+  padding:8px 18px;
+  border:1px solid rgba(0,113,227,.4);
+  border-radius:20px;
+  align-self:flex-start;
+}
+.hero-title{
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size:clamp(64px,9vw,128px);font-weight:700;
+  letter-spacing:-.02em;line-height:.95;
+  color:#fff;margin-bottom:32px;
+  position:relative;
+}
+.hero-title .accent{color:var(--blue);}
+.hero-desc{
+  font-size:20px;font-weight:300;line-height:1.5;
+  color:rgba(255,255,255,0.6);
+  max-width:560px;margin-bottom:48px;
+}
+.hero-rule{
+  width:64px;height:2px;background:var(--blue);
+}
+
+/* ─── BRIDGES ─── */
+.bridge-dark-light{
+  height:120px;
+  background:linear-gradient(to bottom,#000 0%,#000 30%,#3a3a3a 55%,#f5f5f7 80%,#f5f5f7 100%);
+}
+.bridge-light-dark{
+  height:120px;
+  background:linear-gradient(to bottom,#f5f5f7 0%,#f5f5f7 30%,#3a3a3a 55%,#000 80%,#000 100%);
+}
+
+/* ─── SECTIONS ─── */
+.sec{padding:96px 64px;}
+.sec-dark{background:#000;}
+.sec-light{background:#f5f5f7;color:#1d1d1f;}
+.sec-inner{max-width:1240px;margin:0 auto;}
+
+/* ─── SEC LABEL + TITLE ─── */
+.sec-label{
+  font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--blue);margin-bottom:18px;display:block;
+}
+.sec-title{
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size:clamp(32px,4.5vw,56px);font-weight:700;
+  letter-spacing:-.015em;line-height:1.05;
+  margin-bottom:20px;
+}
+.sec-dark .sec-title{color:#fff;}
+.sec-light .sec-title{color:#1d1d1f;}
+.sec-title .muted{font-weight:300;}
+.sec-dark .sec-title .muted{color:rgba(255,255,255,0.35);}
+.sec-light .sec-title .muted{color:rgba(0,0,0,0.3);}
+.sec-sub{
+  font-size:18px;font-weight:300;line-height:1.6;
+  margin-bottom:48px;max-width:720px;
+}
+.sec-dark .sec-sub{color:rgba(255,255,255,0.55);}
+.sec-light .sec-sub{color:rgba(0,0,0,0.5);}
+
+/* ─── BODY TEXT ─── */
+.body-text{font-size:17px;font-weight:300;line-height:1.8;max-width:780px;margin-bottom:22px;}
+.sec-dark .body-text{color:rgba(255,255,255,0.65);}
+.sec-light .body-text{color:rgba(0,0,0,0.6);}
+.body-text:last-child{margin-bottom:0;}
+.body-text strong{font-weight:600;}
+.sec-dark .body-text strong{color:#fff;}
+.sec-light .body-text strong{color:#1d1d1f;}
+
+/* ─── PULL QUOTE ─── */
+.pq{border-left:2px solid var(--blue);padding:6px 0 6px 28px;margin:48px 0;}
+.pq p{
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size:clamp(20px,2.4vw,28px);font-weight:300;line-height:1.45;
+}
+.sec-dark .pq p{color:#fff;}
+.sec-light .pq p{color:#1d1d1f;}
+
+/* ─── CARDS BASE ─── */
+.card{
+  border-radius:var(--radius);padding:32px;
+  transition:background .25s,border-color .25s;
+}
+.sec-dark .card{
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.1);
+}
+.sec-dark .card:hover{
+  background:rgba(255,255,255,0.08);
+  border-color:rgba(255,255,255,0.16);
+}
+.sec-light .card{
+  background:rgba(255,255,255,0.9);
+  border:1px solid rgba(0,0,0,0.08);
+}
+.sec-light .card:hover{
+  background:#fff;
+  border-color:rgba(0,0,0,0.14);
+}
+
+/* ─── 3-CARD GRID (sumário, etc) ─── */
+.tri-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px;}
+@media(max-width:900px){.tri-grid{grid-template-columns:1fr;}}
+.tri-card .label{
+  font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--blue);margin-bottom:18px;display:block;
+}
+.tri-card h3{
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size:18px;font-weight:700;margin-bottom:12px;
+}
+.sec-dark .tri-card h3{color:#fff;}
+.sec-light .tri-card h3{color:#1d1d1f;}
+.tri-card p{font-size:14px;font-weight:300;line-height:1.7;}
+.sec-dark .tri-card p{color:rgba(255,255,255,0.6);}
+.sec-light .tri-card p{color:rgba(0,0,0,0.55);}
+
+/* ─── 4-CARD GRID (insights/aplicações) ─── */
+.quad-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:44px;}
+@media(max-width:900px){.quad-grid{grid-template-columns:1fr;}}
+.quad-card .num{
+  font-size:11px;font-weight:600;letter-spacing:.15em;color:var(--blue);
+  margin-bottom:14px;display:block;
+}
+.quad-card h3{
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size:16px;font-weight:700;margin-bottom:10px;
+}
+.sec-dark .quad-card h3{color:#fff;}
+.sec-light .quad-card h3{color:#1d1d1f;}
+.quad-card p{font-size:14px;font-weight:300;line-height:1.7;}
+.sec-dark .quad-card p{color:rgba(255,255,255,0.55);}
+.sec-light .quad-card p{color:rgba(0,0,0,0.55);}
+
+/* ─── ARQUITETURA: 3 CAMADAS ─── */
+.arch{margin-top:48px;}
+.arch-layer{
+  border-radius:var(--radius);padding:28px 32px;
+  margin-bottom:14px;position:relative;
+  border:1px solid rgba(255,255,255,0.1);
+  background:rgba(255,255,255,0.03);
+}
+.arch-layer.highlight{
+  border:1.5px solid var(--blue);
+  background:rgba(0,113,227,0.05);
+}
+.arch-layer.muted{
+  border:1px dashed rgba(255,255,255,0.2);
+  background:rgba(255,255,255,0.015);
+}
+.arch-tag{
+  font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  margin-bottom:10px;display:inline-block;
+}
+.arch-layer.highlight .arch-tag,
+.arch-layer:not(.muted) .arch-tag{color:var(--blue);}
+.arch-layer.muted .arch-tag{color:rgba(255,255,255,0.35);}
+.arch-name{
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size:24px;font-weight:700;color:#fff;margin-bottom:6px;
+}
+.arch-layer.muted .arch-name{color:rgba(255,255,255,0.4);font-weight:400;}
+.arch-desc{font-size:14px;font-weight:300;color:rgba(255,255,255,0.5);}
+.arch-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.arch-connector{
+  height:24px;width:1px;background:rgba(255,255,255,0.2);
+  margin:0 auto;
+}
+
+/* ─── BU CARD INSIDE ARCH ─── */
+.arch-bu{
+  border-radius:var(--radius);padding:24px 28px;
+  border:1px solid rgba(255,255,255,0.1);
+  background:rgba(255,255,255,0.03);
+}
+.arch-bu.proposed{
+  border:1.5px solid var(--blue);
+  background:rgba(0,113,227,0.05);
+}
+.arch-bu .pill{
+  display:inline-block;font-size:9px;font-weight:600;letter-spacing:.16em;
+  text-transform:uppercase;padding:4px 10px;border-radius:12px;
+  margin-bottom:12px;
+}
+.arch-bu .pill.exists{background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.5);}
+.arch-bu .pill.next{background:var(--blue);color:#fff;}
+.arch-bu h4{
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size:18px;font-weight:700;margin-bottom:6px;
+}
+.arch-bu.proposed h4{color:#fff;}
+.arch-bu:not(.proposed) h4{color:rgba(255,255,255,0.55);}
+.arch-bu p{font-size:13px;font-weight:300;color:rgba(255,255,255,0.45);line-height:1.6;}
+
+/* ─── NOME DA BU ─── */
+.name-card{
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:var(--radius);
+  padding:28px 36px;margin-top:18px;
+  display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;
+}
+.name-card .nm{
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size:32px;font-weight:700;
+}
+.name-card .nm span{color:var(--blue);}
+.name-card .nm-note{font-size:13px;font-weight:300;color:rgba(255,255,255,0.45);}
+
+/* ─── TAGLINE OPTIONS ─── */
+.tag-options{margin-top:32px;display:flex;flex-direction:column;gap:14px;}
+.tag-option{
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.09);
+  border-radius:var(--radius);padding:26px 32px;
+  transition:background .25s,border-color .25s;
+}
+.tag-option:hover{background:rgba(255,255,255,0.07);border-color:rgba(0,113,227,0.4);}
+.tag-option .badge{
+  display:inline-block;font-size:10px;font-weight:600;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--blue);
+  border:1px solid rgba(0,113,227,0.4);
+  padding:5px 12px;border-radius:14px;margin-bottom:14px;
+}
+.tag-option .frase{
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size:22px;font-weight:300;font-style:italic;color:#fff;line-height:1.4;
+  margin-bottom:10px;
+}
+.tag-option .desc{font-size:14px;font-weight:300;color:rgba(255,255,255,0.5);line-height:1.7;}
+
+/* ─── COMUNICAÇÃO: FALAMOS / NÃO ─── */
+.com-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:32px;}
+@media(max-width:900px){.com-grid{grid-template-columns:1fr;}}
+.com-col{
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.09);
+  border-radius:var(--radius);padding:32px;
+}
+.com-col.no{background:rgba(255,255,255,0.015);}
+.com-head{
+  font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  margin-bottom:22px;
+}
+.com-col:not(.no) .com-head{color:var(--blue);}
+.com-col.no .com-head{color:rgba(255,255,255,0.35);}
+.com-list{list-style:none;}
+.com-list li{
+  padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.07);
+  font-size:15px;font-weight:300;line-height:1.6;
+}
+.com-col:not(.no) .com-list li{color:rgba(255,255,255,0.7);}
+.com-col.no .com-list li{color:rgba(255,255,255,0.4);text-decoration:line-through;}
+.com-list li:last-child{border-bottom:none;}
+
+/* ─── CANAIS DIGITAIS ─── */
+.canais{display:flex;flex-direction:column;gap:12px;margin-top:32px;}
+.canal{
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.09);
+  border-radius:var(--radius);padding:26px 32px;
+}
+.canal-head{
+  display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;
+  padding-bottom:14px;margin-bottom:14px;
+  border-bottom:1px solid rgba(255,255,255,0.07);
+}
+.canal-name{
+  font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--blue);
+}
+.canal-url{
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size:15px;font-weight:600;color:#fff;
+}
+.canal p{font-size:14px;font-weight:300;color:rgba(255,255,255,0.55);line-height:1.7;}
+
+/* ─── PORTFOLIO ─── */
+.portfolio{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:32px;}
+@media(max-width:900px){.portfolio{grid-template-columns:1fr;}}
+.port-card{
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.09);
+  border-radius:var(--radius);padding:32px;
+}
+.port-head{
+  display:flex;justify-content:space-between;align-items:baseline;gap:16px;
+  padding-bottom:14px;margin-bottom:18px;
+  border-bottom:1px solid rgba(255,255,255,0.07);
+}
+.port-name{
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size:18px;font-weight:700;color:#fff;
+}
+.port-vol{
+  font-size:11px;font-weight:600;letter-spacing:.12em;
+  color:var(--blue);
+}
+.port-card p{font-size:14px;font-weight:300;color:rgba(255,255,255,0.55);line-height:1.7;}
+
+/* ─── ROADMAP ─── */
+.roadmap{display:flex;flex-direction:column;gap:14px;margin-top:32px;}
+.fase{
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(0,0,0,0.08);
+  border-radius:var(--radius);padding:32px;
+}
+.sec-light .fase{
+  background:rgba(255,255,255,0.9);
+  border:1px solid rgba(0,0,0,0.08);
+}
+.sec-dark .fase{
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.09);
+}
+.fase-head{
+  display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;
+  padding-bottom:18px;margin-bottom:18px;
+}
+.sec-dark .fase-head{border-bottom:1px solid rgba(255,255,255,0.07);}
+.sec-light .fase-head{border-bottom:1px solid rgba(0,0,0,0.07);}
+.fase-tag{
+  display:inline-block;font-size:10px;font-weight:600;letter-spacing:.16em;
+  text-transform:uppercase;color:#fff;background:var(--blue);
+  padding:5px 12px;border-radius:12px;
+}
+.fase-prazo{font-size:13px;font-weight:300;}
+.sec-dark .fase-prazo{color:rgba(255,255,255,0.5);}
+.sec-light .fase-prazo{color:rgba(0,0,0,0.5);}
+.fase-titulo{
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size:18px;font-weight:700;
+}
+.sec-dark .fase-titulo{color:#fff;}
+.sec-light .fase-titulo{color:#1d1d1f;}
+.fase ul{list-style:none;}
+.fase li{
+  padding:10px 0 10px 22px;font-size:15px;font-weight:300;line-height:1.6;
+  position:relative;
+}
+.sec-dark .fase li{color:rgba(255,255,255,0.65);}
+.sec-light .fase li{color:rgba(0,0,0,0.6);}
+.fase li::before{
+  content:'';position:absolute;left:0;top:18px;
+  width:6px;height:6px;border-radius:50%;background:var(--blue);
+}
+
+/* ─── RISCOS ─── */
+.riscos{display:flex;flex-direction:column;gap:14px;margin-top:32px;}
+.risco{
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.09);
+  border-radius:var(--radius);padding:30px 32px;
+}
+.risco h3{
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size:18px;font-weight:700;color:var(--blue);margin-bottom:18px;
+}
+.risco-row{display:grid;grid-template-columns:120px 1fr;gap:18px;margin-bottom:14px;}
+.risco-row:last-child{margin-bottom:0;}
+.risco-label{
+  font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+  color:rgba(255,255,255,0.4);padding-top:3px;
+}
+.risco-text{font-size:15px;font-weight:300;color:rgba(255,255,255,0.65);line-height:1.7;}
+
+/* ─── DECISÃO ─── */
+.decisao-box{
+  background:rgba(0,113,227,0.04);
+  border:1px solid rgba(0,113,227,0.3);
+  border-left:4px solid var(--blue);
+  border-radius:var(--radius);
+  padding:48px;margin-top:32px;
+}
+.dec-block{margin-bottom:32px;}
+.dec-block:last-child{margin-bottom:0;}
+.dec-label{
+  font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--blue);margin-bottom:12px;
+}
+.dec-title{
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size:32px;font-weight:700;color:#fff;line-height:1.2;
+}
+.dec-body{font-size:16px;font-weight:300;color:rgba(255,255,255,0.7);line-height:1.7;}
+
+/* ─── FOOTER ─── */
+footer{
+  padding:48px 64px;background:#000;
+  border-top:1px solid rgba(255,255,255,0.08);
+  display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;
+  font-size:12px;color:rgba(255,255,255,0.4);
+}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:768px){
+  .sec{padding:64px 28px;}
+  .hero{padding:120px 28px 64px;}
+  .hero-meta{left:28px;right:28px;}
+  footer{padding:32px 28px;}
+  .arch-row{grid-template-columns:1fr;}
+  .risco-row{grid-template-columns:1fr;}
+}
+
+/* ─── PRINT ─── */
+@media print{
+  body{font-size:11pt;}
+  .sec{padding:48px 32px;page-break-inside:avoid;}
+  .hero{min-height:auto;page-break-after:always;padding:48px 32px;}
+  .sec-dark{background:#000!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .sec-light{background:#f5f5f7!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .bridge-dark-light,.bridge-light-dark{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ EDIT BAR ═══ -->
+<div class="editbar" id="editbar" onclick="toggleEdit()">
+  <span class="eb-dot"></span>
+  <span id="editbar-text">Ativar edição</span>
+</div>
+
+<!-- ═══ CAPA ═══ -->
+<section class="hero">
+  <div class="hero-meta">
+    <div class="hero-monogram"><strong>HALO</strong> <span>OQ</span></div>
+    <div>Documento interno · Sócios</div>
+  </div>
+  <span class="hero-label">Idealização de Business Unit</span>
+  <h1 class="hero-title">HALO<br>para <span class="accent">Empresas.</span></h1>
+  <p class="hero-desc">A unidade de negócio que conecta a HALO ao mundo corporativo.</p>
+  <div class="hero-rule"></div>
+</section>
+
+<!-- ═══ 01 — SUMÁRIO EXECUTIVO ═══ -->
+<section class="sec sec-dark">
+  <div class="sec-inner">
+    <span class="sec-label">01 — A Tese</span>
+    <h2 class="sec-title">Sumário <span class="muted">executivo.</span></h2>
+    <p class="body-text">A operação B2B da HALO existe e funciona — temos vendas, modelo de voucher, pontos fixos, base ativa de leads e pipeline rodando. O que ainda <strong>não existe</strong> é a operação como <strong>marca</strong>. Empresa que chega no nosso site encontra um ambiente desenhado para consumidor final. Decisor que pesquisa benefícios corporativos não encontra um lugar feito para ele. A oportunidade comercial está madura; a infraestrutura de marca, não.</p>
+    <p class="body-text">Este documento propõe a formalização de <strong>HALO para Empresas</strong> como business unit autônoma da HALO — com identidade visual própria, presença digital própria e narrativa de portfólio unificada. É a fase fundacional. Validada essa camada, a próxima — destrinchar verticalmente por nicho de mercado — passa a ser uma extensão natural do que estiver construído aqui.</p>
+    
+    <div class="tri-grid">
+      <div class="card tri-card">
+        <span class="label">O que é</span>
+        <h3>Unidade de negócio dedicada</h3>
+        <p>HALO para Empresas organiza tudo o que a HALO oferece para o mundo corporativo: venda direta, modelo voucher, pontos fixos, white label e parcerias institucionais.</p>
+      </div>
+      <div class="card tri-card">
+        <span class="label">Por que agora</span>
+        <h3>A operação já existe</h3>
+        <p>O que falta é dar a ela cara, casa e voz próprias. Sem isso, cada novo lead corporativo paga o custo de não encontrar um lugar feito para ele.</p>
+      </div>
+      <div class="card tri-card">
+        <span class="label">A decisão</span>
+        <h3>Idealizar e validar em 90 dias</h3>
+        <p>Identidade visual, posicionamento digital, narrativa de portfólio. Decisões sobre verticalização ficam para a próxima fase.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="bridge-dark-light"></div>
+
+<!-- ═══ 02 — CONTEXTO ═══ -->
+<section class="sec sec-light">
+  <div class="sec-inner">
+    <span class="sec-label">02 — Onde Estamos Hoje</span>
+    <h2 class="sec-title">A operação existe. <span class="muted">A marca, ainda não.</span></h2>
+    <p class="body-text">A HALO já comercializa para empresas há meses. Temos um pipeline ativo, um modelo de voucher operacional, pontos fixos validados, parcerias em discussão e uma base de leads B2B significativa. Tudo isso, hoje, opera <strong>dentro</strong> da HALO consumidor — usando o mesmo site, a mesma comunicação, os mesmos canais.</p>
+    
+    <div class="quad-grid">
+      <div class="card quad-card">
+        <span class="num">01</span>
+        <h3>Venda direta</h3>
+        <p>Pedidos de 10+ unidades com tabela progressiva de descontos, fechamento via WhatsApp, pagamento por PIX ou boleto.</p>
+      </div>
+      <div class="card quad-card">
+        <span class="num">02</span>
+        <h3>Modelo voucher</h3>
+        <p>QR Code individual de resgate. Empresa paga, colaborador escolhe cor, tamanho e endereço. Operação validada em vendas concluídas.</p>
+      </div>
+      <div class="card quad-card">
+        <span class="num">03</span>
+        <h3>Pontos fixos</h3>
+        <p>Modelo de revenda em consignação (7%). Primeiro ponto validado: FIT LAND Lago Sul. Pipeline de expansão em andamento.</p>
+      </div>
+      <div class="card quad-card">
+        <span class="num">04</span>
+        <h3>White label</h3>
+        <p>Conversa em estágio inicial com Banco IMO (~1.500 unidades). Possibilidade de oferta com app personalizado.</p>
+      </div>
+    </div>
+    
+    <div class="pq" style="margin-top:48px;">
+      <p>Quatro frentes operacionais ativas, sob uma marca que ainda fala com consumidor final. O próximo passo natural é dar a essa operação um nome, uma casa e uma voz próprios.</p>
+    </div>
+  </div>
+</section>
+
+<div class="bridge-light-dark"></div>
+
+<!-- ═══ 03 — DIAGNÓSTICO ═══ -->
+<section class="sec sec-dark">
+  <div class="sec-inner">
+    <span class="sec-label">03 — O Custo Invisível</span>
+    <h2 class="sec-title">O que <span class="muted">perdemos hoje.</span></h2>
+    <p class="sec-sub">Cada lead corporativo paga o custo de não encontrar um lugar feito para ele.</p>
+    <p class="body-text">A ausência de uma marca B2B própria não impede a venda — mas adiciona fricção em pontos onde poderia haver fluidez. Esses pontos, somados, comprometem velocidade comercial, percepção de profissionalismo e aproveitamento de oportunidades inbound.</p>
+
+    <div class="quad-grid">
+      <div class="card quad-card">
+        <h3 style="color:var(--blue);margin-bottom:10px;">Inbound corporativo perdido</h3>
+        <p>Empresa busca "anel para benefício corporativo" no Google, cai em haloqring.com, encontra um site para consumidor final. Sem caminho claro para "comprar para meu time". Lead esfria antes do contato.</p>
+      </div>
+      <div class="card quad-card">
+        <h3 style="color:var(--blue);margin-bottom:10px;">Materiais sob a marca de varejo</h3>
+        <p>Decks, propostas e contratos saem hoje sob a identidade HALO consumidor. Funcionam, mas não comunicam que existe uma operação dedicada — passam a impressão de "puxadinho B2B" e não de área formal.</p>
+      </div>
+      <div class="card quad-card">
+        <h3 style="color:var(--blue);margin-bottom:10px;">Conteúdo institucional inexistente</h3>
+        <p>Não há blog, biblioteca de cases ou hub de conteúdo voltado a gestor. Decisor B2B busca evidência, ROI, comparativos — e a HALO não está presente nesse nível de conversa.</p>
+      </div>
+      <div class="card quad-card">
+        <h3 style="color:var(--blue);margin-bottom:10px;">Canais misturados</h3>
+        <p>Instagram fala com consumidor final. WhatsApp atende dúvida sobre tamanho de anel e proposta corporativa no mesmo número. Falta separação que permita comunicação dedicada a cada audiência.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 04 — ARQUITETURA ═══ -->
+<section class="sec sec-dark" style="border-top:1px solid rgba(255,255,255,0.05);">
+  <div class="sec-inner">
+    <span class="sec-label">04 — Onde a BU Se Encaixa</span>
+    <h2 class="sec-title">A arquitetura <span class="muted">completa.</span></h2>
+    <p class="sec-sub">Marca-mãe, business units, e o horizonte de verticalização.</p>
+    <p class="body-text">Pensar HALO para Empresas como business unit pede pensar a HALO como <strong>arquitetura de três camadas</strong>. Em cima, a marca-mãe — institucional, guardiã do produto e do DNA. No meio, as business units — operações autônomas que falam com mundos diferentes. Embaixo, no horizonte futuro, as supermarcas verticais — destrinchamento por nicho de mercado dentro de cada BU, quando fizer sentido.</p>
+
+    <div class="arch">
+      <!-- CAMADA 1 -->
+      <div class="arch-layer highlight">
+        <span class="arch-tag">Camada 1 · Marca-mãe</span>
+        <div class="arch-name">HALO</div>
+        <div class="arch-desc">Produto, credibilidade, DNA institucional</div>
+      </div>
+      <div class="arch-connector"></div>
+      
+      <!-- CAMADA 2 -->
+      <div class="arch-row">
+        <div class="arch-bu">
+          <span class="pill exists">Business Unit · Existe hoje</span>
+          <h4>HALO Consumidor</h4>
+          <p>haloqring.com — venda direta ao consumidor final.</p>
+        </div>
+        <div class="arch-bu proposed">
+          <span class="pill next">A propor · Próxima aposta</span>
+          <h4>HALO para Empresas</h4>
+          <p>Página dedicada no site institucional + canais próprios.</p>
+        </div>
+      </div>
+      <div class="arch-connector"></div>
+      
+      <!-- CAMADA 3 -->
+      <div class="arch-layer muted">
+        <span class="arch-tag">Camada 3 · Horizonte futuro</span>
+        <div class="arch-name">Supermarcas verticais</div>
+        <div class="arch-desc">Destrinchamento por nicho dentro da BU — apenas após validação da camada 2.</div>
+      </div>
+    </div>
+    
+    <p class="body-text" style="margin-top:48px;"><strong>Foco do documento:</strong> a camada 2. Idealizar e validar a business unit antes de qualquer movimento na camada 3.</p>
+  </div>
+</section>
+
+<div class="bridge-dark-light"></div>
+
+<!-- ═══ 05 — IDENTIDADE ═══ -->
+<section class="sec sec-light">
+  <div class="sec-inner">
+    <span class="sec-label">05 — Idealização · Identidade</span>
+    <h2 class="sec-title">A cara <span class="muted">da BU.</span></h2>
+    <p class="sec-sub">Nome, manifesto, tagline e tom de voz da unidade.</p>
+    
+    <h3 style="font-size:13px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);margin-bottom:8px;">Nome — definido</h3>
+    <div class="name-card" style="background:rgba(0,113,227,0.04);border:1px solid rgba(0,113,227,0.25);">
+      <div class="nm">HALO para <span>Empresas</span></div>
+      <div class="nm-note" style="color:rgba(0,0,0,0.5);">Direto, em português, sem jargão de startup.</div>
+    </div>
+    
+    <h3 style="font-size:13px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);margin:48px 0 8px 0;">Caminhos de tagline — três direções para discutir</h3>
+    <div class="tag-options">
+      <div class="tag-option" style="background:rgba(255,255,255,0.9);border:1px solid rgba(0,0,0,0.08);">
+        <span class="badge">Institucional</span>
+        <div class="frase" style="color:#1d1d1f;">"Bem-estar mensurável, agora dentro da sua empresa."</div>
+        <div class="desc" style="color:rgba(0,0,0,0.55);">Foco em legitimidade. Fala com diretor de RH e gestão executiva. Trata o produto como infraestrutura de cuidado, não como gadget.</div>
+      </div>
+      <div class="tag-option" style="background:rgba(255,255,255,0.9);border:1px solid rgba(0,0,0,0.08);">
+        <span class="badge">Técnica</span>
+        <div class="frase" style="color:#1d1d1f;">"Sono, recuperação e energia — em forma de dado, dentro do time."</div>
+        <div class="desc" style="color:rgba(0,0,0,0.55);">Foco no produto. Fala com gestor que valoriza KPI e métrica. Comunica o que o anel faz, não o que ele representa.</div>
+      </div>
+      <div class="tag-option" style="background:rgba(255,255,255,0.9);border:1px solid rgba(0,0,0,0.08);">
+        <span class="badge">Emocional</span>
+        <div class="frase" style="color:#1d1d1f;">"Quando a empresa cuida do descanso, o time entrega o resto."</div>
+        <div class="desc" style="color:rgba(0,0,0,0.55);">Foco no efeito. Fala com líder que pensa cultura, retenção, clima organizacional. Posiciona como decisão estratégica de gestão de pessoas.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="bridge-light-dark"></div>
+
+<!-- ═══ 06 — COMUNICAÇÃO ═══ -->
+<section class="sec sec-dark">
+  <div class="sec-inner">
+    <span class="sec-label">06 — Idealização · Comunicação</span>
+    <h2 class="sec-title">A voz <span class="muted">da BU.</span></h2>
+    <p class="sec-sub">Como HALO para Empresas fala — e como não fala.</p>
+    <p class="body-text">A HALO consumidor tem voz definida: aspiracional, premium, foco em ritual e estética. Funciona para quem compra um anel para si. Não funciona para quem compra cinquenta anéis para o time. A BU precisa de uma voz própria — derivada da mãe, mas calibrada para outro decisor e outro momento de compra.</p>
+    
+    <div class="com-grid">
+      <div class="com-col">
+        <div class="com-head">Falamos</div>
+        <ul class="com-list">
+          <li>Dado, evidência, fisiologia</li>
+          <li>Resultado mensurável para o time</li>
+          <li>Sono e recuperação como infraestrutura</li>
+          <li>Linguagem de gestão de pessoas</li>
+          <li>Caso, comparativo, retorno</li>
+        </ul>
+      </div>
+      <div class="com-col no">
+        <div class="com-head">Não falamos</div>
+        <ul class="com-list">
+          <li>Lifestyle, ritual, estética premium</li>
+          <li>Bem-estar pessoal abstrato</li>
+          <li>Sono como prazer ou luxo</li>
+          <li>Linguagem de consumidor de tecnologia</li>
+          <li>Promessa, aspiração, status</li>
+        </ul>
+      </div>
+    </div>
+    
+    <p class="body-text" style="margin-top:48px;">Esses princípios viram base do <em>brand book</em> da BU — usado por todo o time comercial, de conteúdo e de design para manter consistência em qualquer ponto de contato.</p>
+  </div>
+</section>
+
+<!-- ═══ 07 — POSICIONAMENTO DIGITAL ═══ -->
+<section class="sec sec-dark" style="border-top:1px solid rgba(255,255,255,0.05);">
+  <div class="sec-inner">
+    <span class="sec-label">07 — Idealização · Posicionamento Digital</span>
+    <h2 class="sec-title">A casa <span class="muted">da BU.</span></h2>
+    <p class="sec-sub">Página dedicada dentro do site institucional, mais canais próprios.</p>
+    <p class="body-text">A HALO para Empresas não exige domínio próprio nem subdomínio — a opção mais limpa nesse momento é uma <strong>página dedicada dentro do site institucional</strong>. Mantém o equity da marca-mãe, simplifica SEO, reduz custo de manutenção. O que muda é a estrutura: a página B2B passa a ser <em>cidadã de primeira classe</em>, não enxerto.</p>
+    
+    <div class="canais">
+      <div class="canal">
+        <div class="canal-head">
+          <div class="canal-name">Página no site</div>
+          <div class="canal-url">haloqring.com/empresas</div>
+        </div>
+        <p>Hub central. Apresenta a BU, modelos de venda (direta, voucher, ponto fixo, white label), tabela de preços por volume, formulário de qualificação, cases.</p>
+      </div>
+      <div class="canal">
+        <div class="canal-head">
+          <div class="canal-name">LinkedIn</div>
+          <div class="canal-url">Página HALO — vertical Empresas</div>
+        </div>
+        <p>Canal natural do decisor B2B. Conteúdo de gestão de pessoas, dado de produtividade, cases corporativos. LinkedIn é onde gestor pesquisa solução para o time.</p>
+      </div>
+      <div class="canal">
+        <div class="canal-head">
+          <div class="canal-name">Newsletter B2B</div>
+          <div class="canal-url">Quinzenal · opt-in via formulário</div>
+        </div>
+        <p>Conteúdo curado para gestor de RH, fundador e diretor de operações. Estudos, comparativos, aplicações práticas. Construção de relacionamento longo.</p>
+      </div>
+      <div class="canal">
+        <div class="canal-head">
+          <div class="canal-name">WhatsApp comercial</div>
+          <div class="canal-url">Número dedicado para B2B</div>
+        </div>
+        <p>Separação clara do canal de SAC consumidor. Mensagem de saudação dedicada, fluxo de qualificação, equipe focada.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="bridge-dark-light"></div>
+
+<!-- ═══ 08 — PORTFÓLIO ═══ -->
+<section class="sec sec-light">
+  <div class="sec-inner">
+    <span class="sec-label">08 — Idealização · Portfólio</span>
+    <h2 class="sec-title">A oferta <span class="muted">da BU.</span></h2>
+    <p class="sec-sub">Quatro modelos de venda, uma narrativa unificada.</p>
+    <p class="body-text">Tudo o que a HALO oferece para empresas hoje precisa ser organizado sob a BU como portfólio claro. Mesmo produto, modelos comerciais distintos, cada um endereçando uma necessidade específica. A página de empresas apresenta esses quatro caminhos lado a lado — o lead se qualifica escolhendo qual cabe na sua operação.</p>
+    
+    <div class="portfolio">
+      <div class="port-card" style="background:rgba(255,255,255,0.9);border:1px solid rgba(0,0,0,0.08);">
+        <div class="port-head" style="border-bottom:1px solid rgba(0,0,0,0.08);">
+          <div class="port-name" style="color:#1d1d1f;">Venda direta</div>
+          <div class="port-vol">10–49 unidades</div>
+        </div>
+        <p style="color:rgba(0,0,0,0.55);">Pedido fechado. Empresa recebe os anéis, distribui internamente. Tabela de desconto progressivo. Ideal para pequenas equipes ou kits de incentivo.</p>
+      </div>
+      <div class="port-card" style="background:rgba(255,255,255,0.9);border:1px solid rgba(0,0,0,0.08);">
+        <div class="port-head" style="border-bottom:1px solid rgba(0,0,0,0.08);">
+          <div class="port-name" style="color:#1d1d1f;">Modelo voucher</div>
+          <div class="port-vol">20+ unidades</div>
+        </div>
+        <p style="color:rgba(0,0,0,0.55);">Empresa paga, colaborador resgata individualmente via QR Code escolhendo cor, tamanho e endereço. Ideal para benefício, onboarding e programas de wellness.</p>
+      </div>
+      <div class="port-card" style="background:rgba(255,255,255,0.9);border:1px solid rgba(0,0,0,0.08);">
+        <div class="port-head" style="border-bottom:1px solid rgba(0,0,0,0.08);">
+          <div class="port-name" style="color:#1d1d1f;">Ponto fixo</div>
+          <div class="port-vol">Parceria de revenda</div>
+        </div>
+        <p style="color:rgba(0,0,0,0.55);">Negócio local (estúdio, clínica, espaço wellness) revende o anel em consignação. 7% de comissão. Ideal para parceiros que atendem público qualificado.</p>
+      </div>
+      <div class="port-card" style="background:rgba(255,255,255,0.9);border:1px solid rgba(0,0,0,0.08);">
+        <div class="port-head" style="border-bottom:1px solid rgba(0,0,0,0.08);">
+          <div class="port-name" style="color:#1d1d1f;">White label</div>
+          <div class="port-vol">500+ unidades</div>
+        </div>
+        <p style="color:rgba(0,0,0,0.55);">App personalizado com identidade do cliente. Ideal para grandes contas, instituições financeiras, programas de saúde e fidelização premium.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="bridge-light-dark"></div>
+
+<!-- ═══ 09 — ROADMAP ═══ -->
+<section class="sec sec-dark">
+  <div class="sec-inner">
+    <span class="sec-label">09 — Plano de Execução</span>
+    <h2 class="sec-title">Roadmap <span class="muted">de 90 dias.</span></h2>
+    <p class="sec-sub">Idealizar, validar, lançar — três fases curtas e objetivas.</p>
+    
+    <div class="roadmap">
+      <div class="fase">
+        <div class="fase-head">
+          <div style="display:flex;align-items:center;gap:14px;">
+            <span class="fase-tag">Fase 1</span>
+            <span class="fase-prazo">0–30 dias</span>
+          </div>
+          <div class="fase-titulo">Idealização</div>
+        </div>
+        <ul>
+          <li>Fechamento da identidade visual (variação HALO para BU)</li>
+          <li>Escolha da tagline entre as três direções propostas</li>
+          <li>Brand book curto: voz, princípios de comunicação, faixa de aplicação</li>
+          <li>Wireframe da página /empresas dentro do site institucional</li>
+        </ul>
+      </div>
+      <div class="fase">
+        <div class="fase-head">
+          <div style="display:flex;align-items:center;gap:14px;">
+            <span class="fase-tag">Fase 2</span>
+            <span class="fase-prazo">30–60 dias</span>
+          </div>
+          <div class="fase-titulo">Construção</div>
+        </div>
+        <ul>
+          <li>Desenvolvimento e go-live da página /empresas</li>
+          <li>Reformulação dos materiais comerciais sob a marca da BU</li>
+          <li>Setup do LinkedIn da BU, primeiro calendário editorial</li>
+          <li>Separação do WhatsApp comercial com fluxo dedicado</li>
+        </ul>
+      </div>
+      <div class="fase">
+        <div class="fase-head">
+          <div style="display:flex;align-items:center;gap:14px;">
+            <span class="fase-tag">Fase 3</span>
+            <span class="fase-prazo">60–90 dias</span>
+          </div>
+          <div class="fase-titulo">Validação</div>
+        </div>
+        <ul>
+          <li>Comparação de métricas: tráfego B2B, taxa de conversão de formulário</li>
+          <li>Coleta de feedback dos primeiros leads que entraram pela nova página</li>
+          <li>Ajuste de copy, fluxos e materiais com base em dados reais</li>
+          <li>Decisão sobre próxima fase: começar a discussão das verticais</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 10 — RISCOS ═══ -->
+<section class="sec sec-dark" style="border-top:1px solid rgba(255,255,255,0.05);">
+  <div class="sec-inner">
+    <span class="sec-label">10 — Riscos e Mitigações</span>
+    <h2 class="sec-title">O que pode <span class="muted">dar errado.</span></h2>
+    <p class="sec-sub">Mapear a contrário antes de investir.</p>
+    
+    <div class="riscos">
+      <div class="risco">
+        <h3>Confusão entre marca-mãe e BU</h3>
+        <div class="risco-row">
+          <div class="risco-label">Risco</div>
+          <div class="risco-text">Cliente final achar que HALO para Empresas é uma empresa diferente, ou que a HALO mudou de foco.</div>
+        </div>
+        <div class="risco-row">
+          <div class="risco-label">Mitigação</div>
+          <div class="risco-text">Tratamento sempre vinculado: "HALO para Empresas" mantém HALO como elemento principal. Nunca operar como marca isolada — sempre como vertente da casa-mãe.</div>
+        </div>
+      </div>
+      <div class="risco">
+        <h3>Sobrecarga operacional</h3>
+        <div class="risco-row">
+          <div class="risco-label">Risco</div>
+          <div class="risco-text">Pequena equipe atual de 4 pessoas precisar manter dois mundos ativos sem novas contratações.</div>
+        </div>
+        <div class="risco-row">
+          <div class="risco-label">Mitigação</div>
+          <div class="risco-text">Fase 1 reaproveita o que já existe: identidade deriva da mãe, brand book é curto, página usa template. Nenhuma frente exige profissional novo — apenas redirecionamento de foco.</div>
+        </div>
+      </div>
+      <div class="risco">
+        <h3>Prematuridade da decisão</h3>
+        <div class="risco-row">
+          <div class="risco-label">Risco</div>
+          <div class="risco-text">Investir em BU formal antes da operação atual ter densidade suficiente para sustentá-la.</div>
+        </div>
+        <div class="risco-row">
+          <div class="risco-label">Mitigação</div>
+          <div class="risco-text">A operação já tem densidade — vendas concluídas, modelo voucher rodando, pontos fixos validados, leads em pipeline. A formalização da BU acompanha a maturidade real, não antecipa.</div>
+        </div>
+      </div>
+      <div class="risco">
+        <h3>Gap entre identidade e produto</h3>
+        <div class="risco-row">
+          <div class="risco-label">Risco</div>
+          <div class="risco-text">Construir uma marca corporativa premium e o produto não corresponder à expectativa criada na comunicação.</div>
+        </div>
+        <div class="risco-row">
+          <div class="risco-label">Mitigação</div>
+          <div class="risco-text">O produto já corresponde — o HALO é tecnicamente sólido. O gap atual é só de apresentação. A BU traduz visualmente o que o produto já entrega tecnicamente.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 11 — DECISÃO ═══ -->
+<section class="sec sec-dark" style="border-top:1px solid rgba(255,255,255,0.05);padding-bottom:120px;">
+  <div class="sec-inner">
+    <span class="sec-label">11 — Decisão Solicitada</span>
+    <h2 class="sec-title">O que precisamos <span class="muted">de Pedro e Davi.</span></h2>
+    
+    <div class="decisao-box">
+      <div class="dec-block">
+        <div class="dec-label">Aprovação de</div>
+        <div class="dec-title">Idealizar e validar a BU em 90 dias.</div>
+      </div>
+      <div class="dec-block">
+        <div class="dec-label">Escopo</div>
+        <p class="dec-body">Autorizar a formalização de HALO para Empresas como business unit autônoma. A entrega da fase contempla identidade visual derivada, escolha de tagline, brand book operacional, página dedicada dentro do site institucional, presença em LinkedIn e separação do canal de WhatsApp comercial. A operação ocorre com o time atual, sem novas contratações.</p>
+      </div>
+      <div class="dec-block">
+        <div class="dec-label">Critério de sucesso</div>
+        <p class="dec-body">Página /empresas no ar com fluxo de qualificação rodando. Aumento mensurável no volume de leads inbound corporativos comparado ao baseline atual. Materiais comerciais, canais e narrativa unificados sob a nova identidade. Validação qualitativa com leads que entraram pela nova jornada.</p>
+      </div>
+    </div>
+    
+    <p style="margin-top:48px;font-size:14px;color:rgba(255,255,255,0.4);">Pronto para discussão na próxima reunião de sócios.</p>
+  </div>
+</section>
+
+<footer>
+  <div><strong style="color:#fff;">HALO</strong> · Proposta interna · Confidencial</div>
+  <div>HALO para Empresas — Idealização da Business Unit · 2026</div>
+</footer>
+
+<script>
+// ─── Modo de edição: clica para ativar contenteditable em todo conteúdo
+let editMode = false;
+function toggleEdit() {
+  editMode = !editMode;
+  const eb = document.getElementById('editbar');
+  const ebText = document.getElementById('editbar-text');
+  const editables = document.querySelectorAll(
+    'h1, h2, h3, h4, p, li, .canal-name, .canal-url, .port-name, .port-vol, ' +
+    '.frase, .desc, .badge, .label, .num, .nm, .nm-note, .arch-name, .arch-desc, ' +
+    '.arch-tag, .pill, .com-head, .fase-tag, .fase-prazo, .fase-titulo, ' +
+    '.dec-label, .dec-title, .dec-body, .risco-label, .risco-text, ' +
+    '.hero-label, .hero-desc, .hero-monogram, .sec-label, .sec-sub, .pq, ' +
+    '.tri-card span, .quad-card span'
+  );
+  
+  editables.forEach(el => {
+    el.contentEditable = editMode ? 'true' : 'false';
+    el.style.outline = editMode ? '1px dashed rgba(0,113,227,0.3)' : 'none';
+    el.style.outlineOffset = editMode ? '4px' : '0';
+  });
+  
+  if (editMode) {
+    eb.classList.add('active');
+    ebText.textContent = 'Salvar e sair';
+    document.body.style.cursor = 'text';
+  } else {
+    eb.classList.remove('active');
+    ebText.textContent = 'Ativar edição';
+    document.body.style.cursor = 'default';
+  }
+}
+
+// ─── Atalho: Cmd/Ctrl + E para alternar
+document.addEventListener('keydown', e => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'e') {
+    e.preventDefault();
+    toggleEdit();
+  }
+});
+</script>
+</body>
+</html>
